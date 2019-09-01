@@ -23,10 +23,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.StringTokenizer;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
-public class ControladorOpcionesTexto {
+public final class ControladorOpcionesTexto {
     
     public void mostrarContenido(String nombreArchivo){
         File archivo = new File(nombreArchivo);
@@ -35,18 +39,20 @@ public class ControladorOpcionesTexto {
         try{
             lector = new FileReader(archivo);
             bf = new BufferedReader(lector);
-        }catch(FileNotFoundException e){
-            System.out.println("No se encontró el archivo "+archivo.getName()+".");
-        }
-        try{
+            try{
             String contenido;
             System.out.println("Contenido del archivo: ");
-            while((contenido = bf.readLine())!=null){
-                System.out.println(contenido);
-            }
+            System.out.println();
+                while((contenido = bf.readLine())!=null){
+                    System.out.println(contenido);
+                }
+            System.out.println();
             lector.close();
-        }catch(IOException e){
-            System.err.println(e);
+            }catch(IOException e){
+                System.err.println(e);
+            }            
+        }catch(FileNotFoundException e){
+            System.out.println("No se encontró el archivo "+archivo.getName()+".");
         }
     }
     
@@ -66,6 +72,7 @@ public class ControladorOpcionesTexto {
                 }
             }
             System.out.print("Resultado: "+lineamaslarga);
+            System.out.println();
             lector.close();
         }catch(IOException e){
             System.err.println(e);
@@ -75,25 +82,31 @@ public class ControladorOpcionesTexto {
     public void cadenaMasRepite(String cadena,String nombreArchivo){
         File archivo =  new File(nombreArchivo);
         FileReader lector;
-        File archivo2 = new File("Nuevo_Archivo.txt");
-        PrintWriter pw = null;
-        BufferedReader bf = null;
+        File archivo_resultado = new File("Archivo_resultado.txt");
+        PrintWriter pw;
+        BufferedReader bf;
         try{
             lector = new FileReader(archivo);
             bf = new BufferedReader(lector);
-            pw = new PrintWriter(archivo2);
+            pw = new PrintWriter(archivo_resultado);
             String contenido;
+            String linea;
             while((contenido = bf.readLine())!=null){
-                StringTokenizer linea = new StringTokenizer(contenido);
-                int contador = 0;
-                while(linea.hasMoreTokens()){
-                    if(linea.nextToken().equals(cadena)){
-                        contador++;
-                    }
+                linea = contenido;
+                String cadenas[] = null;
+                for (int i = 0 ; i<linea.length();i++){
+                    cadenas = linea.split(cadena);
                 }
-                pw.println(contador+" "+contenido);
+                pw.println(cadenas.length-1+" "+contenido);
             }
+            lector.close();
             pw.close();
+            lector = new FileReader(archivo_resultado);
+            bf = new BufferedReader(lector);
+            while((contenido = bf.readLine())!=null){
+                System.out.println(contenido);
+            }
+            lector.close();
         }catch(IOException e){
             System.err.println(e);
         }      
@@ -101,12 +114,15 @@ public class ControladorOpcionesTexto {
     
     public void cadenaMasCorta(int entero,String nombreArchivo){
         File archivo =  new File(nombreArchivo);
+        File archivo_resultado = new File("cadenaMasCorta.txt");
         FileReader lector;
-        BufferedReader bf = null;
+        BufferedReader bf;
+        PrintWriter pw;
         try{
             if(entero == 1){
             lector = new FileReader(archivo);
             bf = new BufferedReader(lector);
+            pw = new PrintWriter(archivo_resultado);
             String contenido;
             String lineamascorta= bf.readLine();
             while((contenido = bf.readLine())!=null){
@@ -114,12 +130,15 @@ public class ControladorOpcionesTexto {
                     lineamascorta=contenido;
                 }
             }
-            System.out.print("Resultado: "+lineamascorta);
-            lector.close();                
+            pw.println(lineamascorta);
+            lector.close();
+            pw.close();
+            System.out.println("Archivo resultado: "+lineamascorta);
             }
             else{
             lector = new FileReader(archivo);
             bf = new BufferedReader(lector);
+            pw = new PrintWriter(archivo_resultado);
             String contenido;
             ArrayList<String> cadenas = new ArrayList<String>();
             while((contenido = bf.readLine())!=null){
@@ -130,12 +149,14 @@ public class ControladorOpcionesTexto {
                 public int compare(String o1, String o2) {
                     return o1.length()-o2.length();
                 }
-            });
-            System.out.print("Resultado: ");   
+            });   
+            System.out.println("Archivo resultado: ");            
             for(int i = 0 ; i<entero;i++){
-                System.out.print(cadenas.get(i)+" ");
+                pw.println(cadenas.get(i));
+                System.out.println(cadenas.get(i));
             }
-            lector.close();                
+            lector.close();  
+            pw.close();
             }
         }catch(IOException e){
             System.err.println(e);
@@ -146,12 +167,15 @@ public class ControladorOpcionesTexto {
     
     public void cadenaMasLarga(int entero,String nombreArchivo){
         File archivo =  new File(nombreArchivo);
+        File archivo_resultado = new File("cadenaMasLarga.txt");
         FileReader lector;
-        BufferedReader bf = null;
+        BufferedReader bf;
+        PrintWriter pw;
         try{
             if(entero == 1){
             lector = new FileReader(archivo);
             bf = new BufferedReader(lector);
+            pw = new PrintWriter(archivo_resultado);
             String contenido;
             String lineamaslarga= bf.readLine();
             while((contenido = bf.readLine())!=null){
@@ -159,12 +183,15 @@ public class ControladorOpcionesTexto {
                     lineamaslarga=contenido;
                 }
             }
-            System.out.print("Resultado: "+lineamaslarga);
-            lector.close();                
+            pw.println(lineamaslarga);
+            lector.close();   
+            pw.close();
+            System.out.println("Archivo resultado: "+ lineamaslarga);
             }
             else{
             lector = new FileReader(archivo);
             bf = new BufferedReader(lector);
+            pw = new PrintWriter(archivo_resultado);
             String contenido;
             ArrayList<String> cadenas = new ArrayList<String>();
             while((contenido = bf.readLine())!=null){
@@ -175,16 +202,127 @@ public class ControladorOpcionesTexto {
                 public int compare(String o1, String o2) {
                     return o2.length()-o1.length();
                 }
-            });
-            System.out.print("Resultado: ");   
+            });  
+            System.out.println("Archivo resultado: ");
             for(int i = 0 ; i<entero;i++){
-                System.out.print(cadenas.get(i)+" ");
+                pw.println(cadenas.get(i));
+                System.out.println(cadenas.get(i));
             }
-            lector.close();                
+            lector.close();   
+            pw.close();           
             }
         }catch(IOException e){
             System.err.println(e);
         }        
+    }
+    
+    
+    public void cadenaMasComun(int entero, String nombreArchivo){
+        File archivo =  new File(nombreArchivo);
+        FileReader lector;
+        BufferedReader bf;    
+        try{
+            if(entero == 1){
+            lector = new FileReader(archivo);
+            bf = new BufferedReader(lector);
+            String contenido; 
+            HashMap<String, Integer> palabras = new HashMap<String, Integer>();
+            while((contenido = bf.readLine())!=null){
+                String[] linea = contenido.split(" ");
+                for (String linea1 : linea) {
+                    if(palabras.containsKey(linea1.toString())==true){
+                        palabras.replace(linea1.toString(), palabras.get(linea1.toString()), palabras.get(linea1.toString())+1);
+                    }
+                    else{
+                        palabras.put(linea1.toString(), 1);
+                    }                    
+                }
+            }
+            LinkedHashMap<String, Integer> mapaOrdenado = new LinkedHashMap<>();
+            ArrayList<String> lista = new ArrayList<>();
+            for (Map.Entry<String, Integer> entrada : palabras.entrySet()) {
+                lista.add(entrada.getValue().toString());
+            }
+            Collections.sort(lista, new Comparator<String>() {
+                @Override
+                public int compare(String str, String str1) {
+                   return Integer.parseInt(str1)-Integer.parseInt(str);
+                }
+            });
+            for(String str : lista){
+                for(Entry<String,Integer> entry : palabras.entrySet()){
+                    if(entry.getValue()==(Integer.parseInt(str))){
+                        mapaOrdenado.put(entry.getKey(), Integer.parseInt(str));
+                    }
+                }
+            }
+            System.out.println("");
+            System.out.print("Resultado: "); 
+            Iterator iterator = mapaOrdenado.keySet().iterator();
+            while (iterator.hasNext()) {
+                Object clave = iterator.next();
+                System.out.println(clave );
+                break;
+            }
+            System.out.println();
+            }
+            else{
+            lector = new FileReader(archivo);
+            bf = new BufferedReader(lector);
+            String contenido; 
+            HashMap<String, Integer> palabras = new HashMap<String, Integer>();
+            while((contenido = bf.readLine())!=null){
+                String[] linea = contenido.split(" ");
+                for (String linea1 : linea) {
+                    if(palabras.containsKey(linea1.toString())==true){
+                        palabras.replace(linea1.toString(), palabras.get(linea1.toString()), palabras.get(linea1.toString())+1);
+                    }
+                    else{
+                        palabras.put(linea1.toString(), 1);
+                    }                    
+                }
+            }
+            LinkedHashMap<String, Integer> mapaOrdenado = new LinkedHashMap<>();
+            ArrayList<String> lista = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : palabras.entrySet()) {
+                lista.add(entry.getValue().toString());
+            }
+            Collections.sort(lista, new Comparator<String>() {
+                @Override
+                public int compare(String str, String str1) {
+                   return Integer.parseInt(str1)-Integer.parseInt(str);
+                }
+            });
+            for(String str : lista){
+                for(Entry<String,Integer> entry : palabras.entrySet()){
+                    if(entry.getValue()==(Integer.parseInt(str))){
+                        mapaOrdenado.put(entry.getKey(), Integer.parseInt(str));
+                    }
+                }
+            }
+            System.out.println("");
+            System.out.print("Resultado: "); 
+            Iterator iterator = mapaOrdenado.keySet().iterator();
+            int contador = 0;
+            while (iterator.hasNext()) {
+                Object llave = iterator.next();
+                System.out.print(llave +" ");
+                contador++;
+                if(contador == entero){
+                    break;
+                }
+
+            }  
+            System.out.println();
+            }
+            
+        }catch(IOException e){
+            System.err.println(e);
+        }
+        
+        
+        
+        
     }
 
 }

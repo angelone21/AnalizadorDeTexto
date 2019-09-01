@@ -18,7 +18,7 @@ import edu.cecar.controladores.ControladorOpcionesTexto;
 import org.junit.Test;
 
 
-public class TestControladorOpcionTexto {
+public final class TestControladorOpcionTexto {
     
     @Test
     public void testOpcionSinOpcion(){
@@ -30,7 +30,7 @@ public class TestControladorOpcionTexto {
     @Test
     public void testCadedaMasRepite(){
         ControladorOpcionesTexto controladorOpcionesTexto = new ControladorOpcionesTexto();
-        controladorOpcionesTexto.cadenaMasRepite("a", "archivoprueba.txt"); 
+        controladorOpcionesTexto.cadenaMasRepite("ho", "archivoprueba.txt"); 
     }
     
     @Test
@@ -43,5 +43,11 @@ public class TestControladorOpcionTexto {
     public void testCadenaMasLarga(){
         ControladorOpcionesTexto controladorOpcionesTexto = new ControladorOpcionesTexto();
         controladorOpcionesTexto.cadenaMasLarga(2, "archivoprueba.txt");
+    }
+    
+    @Test
+    public void testCadenaMasComun(){
+        ControladorOpcionesTexto controladorOpcionesTexto = new ControladorOpcionesTexto();
+        controladorOpcionesTexto.cadenaMasComun(2, "archivoprueba.txt"); 
     }
 }
