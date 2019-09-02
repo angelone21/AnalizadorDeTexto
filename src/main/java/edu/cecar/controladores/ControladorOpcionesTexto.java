@@ -150,10 +150,14 @@ public final class ControladorOpcionesTexto {
                     return o1.length()-o2.length();
                 }
             });   
-            System.out.println("Archivo resultado: ");            
-            for(int i = 0 ; i<entero;i++){
-                pw.println(cadenas.get(i));
-                System.out.println(cadenas.get(i));
+            System.out.println("Archivo resultado: ");  
+            try{
+                for(int i = 0 ; i<entero;i++){
+                    pw.println(cadenas.get(i));
+                    System.out.println(cadenas.get(i));
+                }                
+            }catch(IndexOutOfBoundsException e){
+                
             }
             lector.close();  
             pw.close();
@@ -204,9 +208,13 @@ public final class ControladorOpcionesTexto {
                 }
             });  
             System.out.println("Archivo resultado: ");
-            for(int i = 0 ; i<entero;i++){
-                pw.println(cadenas.get(i));
-                System.out.println(cadenas.get(i));
+            try{
+                for(int i = 0 ; i<entero;i++){
+                    pw.println(cadenas.get(i));
+                    System.out.println(cadenas.get(i));
+                }                
+            }catch(IndexOutOfBoundsException e){
+                
             }
             lector.close();   
             pw.close();           
