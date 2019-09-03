@@ -1,5 +1,5 @@
 # AnalizadorDeTexto
-Proyecto de analizador de texto realizado en la clase de análisis y diseño II
+Proyecto analizador de texto realizado en la clase de análisis y diseño II
 
 Participantes:
 
