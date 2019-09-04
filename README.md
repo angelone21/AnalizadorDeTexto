@@ -6,3 +6,7 @@ Participantes:
 Vincenzo Angelone Salgado
 
 David Junco Rivero
+
+Comando:
+
+analizadorTexto [opciones] <nombrearchivo.txt>
